@@ -39,6 +39,7 @@ type fe_binary_op =
       
 type f_var = string (*can be anything*)
 
+type s_command = string 
   
 (*abstract variable*)
 type abstract_var =
@@ -51,7 +52,7 @@ type abstract_var =
 type abstract_command =
 | Tr_start of abstract_var list
 | Tr_end of abstract_var list
-(*| Tr_command of s_command_e * (abstract_var list) (*the abstract var list is the list of variables used by the command*)*)
+| Tr_command of s_command * (abstract_var list) (*the abstract var list is the list of variables used by the command*)
 
 
 (*Abstract expression*)
@@ -84,7 +85,8 @@ type formula =
 | F_comment of string
 
 
-(* dump functions *)                 
+(* dump functions *)
+val print_type : abstract_type -> string
 val print_expr : abstract_expr -> string
 val print_formula_simple : formula -> string
 val print_formula_with_assert_forall : formula -> string

@@ -71,12 +71,13 @@ type abstract_var =
   trans_initial_var : f_var;
   trans_type : abstract_type;
 }
-
+type s_command = string
+  
 (*Abstract commands*)
 type abstract_command =
 | Tr_start of abstract_var list
 | Tr_end of abstract_var list
-(*| Tr_command of s_command_e * (abstract_var list) (*the abstract var list is the list of variables used by the command*)*)
+| Tr_command of s_command * (abstract_var list) (*the abstract var list is the list of variables used by the command*)
 
 
 (*Abstract expression*)
@@ -222,7 +223,7 @@ let rec get_expr_variables e t =
 (*Get variable used in a formula*)
 let rec get_used_variables f = 
   match f with
-  (*  | F_node(Tr_command(command, vars), func) -> List.fold_left (fun set v -> list_union set (get_expr_variables (func v) (v.trans_type))) [] vars*)
+  | F_node(Tr_command(command, vars), func) -> List.fold_left (fun set v -> list_union set (get_expr_variables (func v) (v.trans_type))) [] vars
   | F_node(Tr_start(vars), func) ->  List.fold_left (fun set v -> list_union set (get_expr_variables (func v) (v.trans_type))) [] vars
   | F_node(Tr_end(vars), func) -> List.fold_left (fun set v -> list_union set (get_expr_variables (func v) (v.trans_type))) [] vars
   | F_implies(f1, f2) -> list_union (get_used_variables f1) (get_used_variables f2) 
@@ -234,7 +235,7 @@ let rec get_used_variables f =
 
 
 let rec print_formula_simple f = match f with
-    (*    | F_node(Tr_command(command, vars), func) -> "("^(print_node command)^(List.fold_left (fun bef var -> bef^" "^(print_expr (func var))) "" vars)^")"*)
+  | F_node(Tr_command(command, vars), func) -> "("^(command)^(List.fold_left (fun bef var -> bef^" "^(print_expr (func var))) "" vars)^")"
     | F_node(Tr_start(vars), func) -> "(start"^(List.fold_left (fun bef var -> bef^" "^(print_expr (func var))) "" vars)^")"
     | F_node(Tr_end(vars), func) -> "(end"^(List.fold_left (fun bef var -> bef^" "^(print_expr (func var))) "" vars)^")"
     | F_implies(f1, f2) -> "( => "^(print_formula_simple f1)^" "^(print_formula_simple f2)^")"

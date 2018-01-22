@@ -46,9 +46,12 @@ let mycomment = "This is a testfile"
 let myheader = "(set-option:timeout 300000)\n(set-logic HORN)"
 let myfooter = "\n\n(check-sat)"
 
+
+let test3 = F_node(Tr_command("toto", [{trans_initial_var = "x"; trans_type =  Tr_int}]),fun v -> Fe_variable(v))
+
 (*main function*)
 let _ =
-  let mytest = testarray in (*change here!*)
+  let mytest = test3 in (*change here!*)
   let _ = Printf.printf("Printing the test!\n") in
   let
     strheader = Printf.sprintf "%s\n" (print_smt_header myheader) and
