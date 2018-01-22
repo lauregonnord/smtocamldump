@@ -250,3 +250,17 @@ let rec print_formula_with_assert_forall formula=
      (List.fold_left (fun bef (v_name, t) -> Printf.sprintf "%s(%s %s) " bef v_name (print_type t)) "" (get_used_variables formula)) 
      ^ ") " ^ (print_formula_simple formula) ^ "))"
      
+(*prints fun declaration in smt2 format*)
+let print_fun_decl (f_name,typesin,typeout)  = 
+  Printf.sprintf "(declare-fun %s (%s) %s)" f_name (List.fold_left (fun bef t -> bef ^ (print_type t)^" ") "" typesin) (print_type typeout)
+
+let print_smt_comment mycomment =
+  Printf.sprintf ";;%s" mycomment
+
+let print_smt_header mychain = 
+  Printf.sprintf "%s" mychain
+                 
+let print_smt_footer mychain = 
+  Printf.sprintf "%s" mychain
+
+      

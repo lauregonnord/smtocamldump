@@ -89,3 +89,7 @@ val print_expr : abstract_expr -> string
 val print_formula_simple : formula -> string
 val print_formula_with_assert_forall : formula -> string
                                         
+val print_fun_decl : string * abstract_type list * abstract_type -> string
+val print_smt_comment : string -> string
+val print_smt_header : string -> string
+val print_smt_footer : string -> string
